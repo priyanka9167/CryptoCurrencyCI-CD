@@ -26,7 +26,6 @@ node_modules/
 
 # Dependency lock files
 yarn.lock
-package-lock.json
 
 cryptonew.pem
  frontend/.env
