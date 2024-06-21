@@ -10,8 +10,7 @@ COPY Cargo.toml Cargo.lock ./
 #Copy the source code
 COPY src ./src
 
-#Copy env file
-COPY .env ./
+
 
 RUN cargo build --release
 
