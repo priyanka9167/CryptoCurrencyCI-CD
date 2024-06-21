@@ -35,11 +35,20 @@ jobs:
             DATABASE_URL: ${{secrets.DATABASE_URL}}  
             MORALIS_API_KEY: ${{secrets.MORALIS_API_KEY}}  
 
-      - name: Build and push the Docker image
+      - name: Build and push the backend Docker image
         run: |
           docker buildx create --use
           docker buildx inspect --bootstrap
-          docker buildx build --platform linux/amd64,linux/arm64 -t 533267136505.dkr.ecr.us-east-1.amazonaws.com/crypto-backend:latest --push ./backend
+          docker buildx build --platform linux/amd64 -t 533267136505.dkr.ecr.us-east-1.amazonaws.com/crypto-backend:latest --push ./backend
 
+      # - name: Build and push frontend image
+      #   run: |
+      #     docker buildx create --use
+      #     docker buildx inspect --bootstrap
+      #     docker buildx build --platform linux/amd64 -t 533267136505.dkr.ecr.us-east-1.amazonaws.com/crypto-frontend:latest --push ./frontend
       
-      
+      # - name: Build and push proxy image
+      #   run: |
+      #     docker buildx create --use
+      #     docker buildx inspect --bootstrap
+      #     docker buildx build --platform linux/amd64, -t 533267136505.dkr.ecr.us-east-1.amazonaws.com/crypto-proxy:latest --push ./nginx
