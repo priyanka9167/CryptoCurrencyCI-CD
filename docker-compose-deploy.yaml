@@ -20,6 +20,10 @@ services:
     container_name: "backend"
     depends_on:
       - pg_db
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      MORALIS_API_KEY: ${MORALIS_API_KEY}
+
     
 
   frontend:

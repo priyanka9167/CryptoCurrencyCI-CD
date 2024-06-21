@@ -32,6 +32,10 @@ COPY --from=builder /usr/src/app/target/release/backend .
 
 # Copy env from builder stage
 # COPY --from=builder /usr/src/app/.env ./
+# Create a .env file dynamically
+RUN echo "DATABASE_URL=${DATABASE_URL}" >> .env && \
+    echo  "MORALIS_API_KEY"=${MORALIS_API_KEY} >> .env
+
 
 #Expose the port to axum app runs on
 EXPOSE 3000
