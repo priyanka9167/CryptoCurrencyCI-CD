@@ -37,10 +37,9 @@ jobs:
 
       - name: Build and push the Docker image
         run: |
-          cd backend
           docker buildx create --use
           docker buildx inspect --bootstrap
-          docker buildx build --platform linux/amd64 -t ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/${{secrets.ECR_BACKEND_IMAGE}} --push .
+          docker buildx build --platform linux/amd64,linux/arm64 -t 533267136505.dkr.ecr.us-east-1.amazonaws.com/crypto-backend:latest --push ./backend
 
       
       
