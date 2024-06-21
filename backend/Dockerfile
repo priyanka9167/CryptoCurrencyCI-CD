@@ -10,6 +10,8 @@ COPY Cargo.toml Cargo.lock ./
 #Copy the source code
 COPY src ./src
 
+ENV DATABASE_URL ""
+ENV MORALIS_API_KEY ""
 
 
 RUN cargo build --release
