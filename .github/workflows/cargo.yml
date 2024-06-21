@@ -28,7 +28,12 @@ jobs:
 
       - name: Login to Amazon ECR
         run: |
+            echo ${{secrets.DATABASE_URL}}
+            echo ${{secrets.MORALIS_API_KEY}}
             aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+        env:
+            DATABASE_URL: ${{secrets.DATABASE_URL}}  
+            MORALIS_API_KEY: ${{secrets.MORALIS_API_KEY}}  
 
       - name: Build and push the Docker image
         run: |
