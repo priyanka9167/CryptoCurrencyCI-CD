@@ -31,7 +31,7 @@ WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/target/release/backend .
 
 # Copy env from builder stage
-COPY --from=builder /usr/src/app/.env ./
+# COPY --from=builder /usr/src/app/.env ./
 
 #Expose the port to axum app runs on
 EXPOSE 3000
