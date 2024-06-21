@@ -10,6 +10,7 @@ pub async fn connect_n_get_db_pool() -> Result<Pool<Postgres>, sqlx::Error> {
     //  for SQLite, use SqlitePoolOptions::new()
     //  etc.
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    println!("{}",&database_url);
     let pool = PgPoolOptions::new()
         .max_connections(5)
         .connect(&database_url)
