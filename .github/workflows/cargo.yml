@@ -3,9 +3,9 @@ name: Rust CI with cargo
 on:
   push:
    branches:
-    - "main"
+    - "master"
   pull_request:
-    branches: ['main']
+    branches: ['master']
 
 jobs:
   docker:
