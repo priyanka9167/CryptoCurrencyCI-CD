@@ -10,7 +10,11 @@ jobs:
 
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
     steps:
+      - name: echo
+        run: |
+          echo "Instance ID : ${{ secrets.AWS_INSTANCE_ID }}"
       - name: AWS SSM Send-Command
         uses: peterkimzz/aws-ssm-send-command@v1.1.1
         with:
@@ -22,6 +26,7 @@ jobs:
           aws-region: us-east-1
           # AWS EC2 Instance id or ids
           instance-ids: ${{ secrets.AWS_INSTANCE_ID }}
+          
           # Command execution location
           working-directory: /home/ec2-user/etherum
           # Bash commands you want to execute
