@@ -21,7 +21,7 @@ mod blockchain_apis;
 
 #[tokio::main]
 async fn main() {
-    // dotenv().expect("-->> No .env found \n");
+    dotenv().expect("-->> No .env found \n");
     let pool = db::connect_n_get_db_pool().await.unwrap();
 
 

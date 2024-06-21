@@ -28,4 +28,6 @@ node_modules/
 yarn.lock
 
 cryptonew.pem
- frontend/.env
+frontend/.env
+/pg_data
+/postgres
