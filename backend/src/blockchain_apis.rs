@@ -86,7 +86,7 @@ pub async fn fetch_btc_data() -> Result<Vec<BlockInfo>, Box<dyn std::error::Erro
     
     // Process each block to create BlockInfo
     let mut block_infos = Vec::new();
-    for block in parsed_response.iter().take(10) {
+    for block in parsed_response.iter().take(5) {
 
         let block_hash = &block.hash;
         let block_height = block.height;

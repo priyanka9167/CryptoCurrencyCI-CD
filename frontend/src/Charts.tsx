@@ -11,7 +11,7 @@ const Charts: React.FC = () => {
 
     const fetchApi = async () => {
         try {
-            let response = await fetch("http://localhost:3000/get_bitcoin");
+            let response = await fetch("/api/v1/get_bitcoin");
             let block_data = await response.json();
             const parseData = block_data.map((block: BlockData) => {
 
