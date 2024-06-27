@@ -3,13 +3,13 @@
 use std::time::Duration;
 
 use axum::{ http::HeaderName, routing::get,  Router};
-use handlers::get_bitcoin;
+// use handlers::get_bitcoin;
 use models::AppState;
 // use reqwest::Error;
 use dotenv::dotenv;
 use reqwest::Method;
 use sqlx::{PgPool, Pool};
-use tokio::{net::TcpListener, time::interval};
+use tokio::time::interval;
 use tower_http::cors::{Any, CorsLayer};
 
 mod models;
@@ -21,7 +21,7 @@ mod blockchain_apis;
 
 #[tokio::main]
 async fn main() {
-    // dotenv().expect("-->> No .env found \n");
+    dotenv().expect("-->> No .env found \n");
     let pool = db::connect_n_get_db_pool().await.unwrap();
 
 
@@ -40,22 +40,21 @@ async fn main() {
         .allow_headers(vec![HeaderName::from_lowercase(b"content-type").unwrap()]);
 
         let app = Router::new()
-        .route("/api/v1/get_bitcoin", get(handlers::get_bitcoin))
-        .route("/api/v1/get_rate", get(handlers::fetch_rate))
+        .route("/get_bitcoin", get(handlers::get_bitcoin))
         .layer(cors)
         .with_state(shared_state.clone());
 
     // run our app with hyper, listening globally on port 3000
     println!("Server started!!!");
     
-    
+
     
 
-    let listener: tokio::net::TcpListener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
 
     // Spawn a new task to fetch Bitcoin data
     tokio::spawn(async move {
-        let mut interval = interval(Duration::from_secs(10));
+        let mut interval = interval(Duration::from_secs(600));
         loop {
             interval.tick().await;
             start_fetching(&pool).await;
@@ -66,15 +65,12 @@ async fn main() {
     axum::serve(listener, app).await.unwrap();
 }
 
-async fn start_fetching(pool: &PgPool){
-    println!("Started fetching!!!");
-    let mut interval = interval(Duration::from_secs(10));
-    loop{
-        interval.tick().await;
-        // let latest_bitcoin_data = fetch_btc_data().await;
-        let latest_blocks = blockchain_apis::fetch_btc_data().await.unwrap();
+async fn start_fetching(pool: &PgPool) -> Result<(), Box<dyn std::error::Error>> {
+    println!("Started fetching Bitcoin data!!!");
 
-        repository::insert_blocks(&pool, latest_blocks).await.unwrap();
-    }
+    let latest_blocks = blockchain_apis::fetch_btc_data().await?;
+    repository::insert_block_info(&pool, latest_blocks).await?;
+
+    Ok(())
 }
 
