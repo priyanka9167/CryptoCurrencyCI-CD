@@ -40,7 +40,7 @@ async fn main() {
         .allow_headers(vec![HeaderName::from_lowercase(b"content-type").unwrap()]);
 
         let app = Router::new()
-        .route("/get_bitcoin", get(handlers::get_bitcoin))
+        .route("/api/v1/get_bitcoin", get(handlers::get_bitcoin))
         .layer(cors)
         .with_state(shared_state.clone());
 
